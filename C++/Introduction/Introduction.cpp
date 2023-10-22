@@ -107,7 +107,7 @@ int main()
         cout << "C++ has a lot of options.\n";
     }
     // While Loop:
-    int i;
+    int i{ 0 };
     while (i < 10)
     {
         cout << "C++ has a lot of options.\n";
@@ -137,6 +137,13 @@ int main()
     char message3[]{ "Hello World!" };
     cout << message3 << endl;  //initialising with a string and omitting size will give it a null terminator at the end of array.
     // can't print arrays other than char datatype using the same methods.
+    // Pointers
+    int* var1{&num1}, * var2{nullptr}, * var3, var4; // * before variable name initialises it as pointer. int pointer can only point to int variables.
+    // All pointers have same size. var4 is regular variable. &num1 gives the address of num1.
+    // All pointers are initialised with nullptr by default.
+
+
+
 
 
 

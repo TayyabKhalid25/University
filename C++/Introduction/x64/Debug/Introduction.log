@@ -1,2 +1,3 @@
 ﻿  Introduction.cpp
+C:\Users\Hassaan\Desktop\Programming\C++\Introduction\Introduction.cpp(123,9): warning C4101: 'scores': unreferenced local variable
   Introduction.vcxproj -> C:\Users\Hassaan\Desktop\Programming\C++\Introduction\x64\Debug\Introduction.exe
