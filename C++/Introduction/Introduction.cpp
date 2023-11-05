@@ -146,7 +146,12 @@ int main()
     delete dpointer;  // Never use delete twice on a pointer.
     dpointer = nullptr; // just to play it safe, ensure no random memory is accessed.
 
-
+    // COMPLETE POINTERS SECTION ABOVE.
+    // MOVE POINTER SECTION TO A SEPERATE FILE
+    // MAKE SEPERATE SORT AND SEARCH FILE
+    // MAKE SEPERATE FUNCTIONS FILE
+    // MAKE SEPERATE FILE HANDLING FILE
+    // MAKE SEPERATE OOP FILE
 
 
 
