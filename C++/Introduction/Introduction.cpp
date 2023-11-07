@@ -113,7 +113,7 @@ int main()
         cout << "C++ has a lot of options.\n";
         i++;
     }
-    // Do While Loop: (Alternative of Repeat untill, runs the code first, checks condition later.
+    // Do While Loop: (Alternative of Repeat until, runs the code first, checks condition later.
     do
     {
         cout << "C++ has a lot of options.\n";
