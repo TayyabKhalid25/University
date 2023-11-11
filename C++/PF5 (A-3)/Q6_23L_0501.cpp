@@ -62,9 +62,9 @@ void sortData(int arr[], int Us[], int Freq[], int size)
 
 int main()
 {
-    int arr[30], Us[30], Freq[30], size = 0, endpointer, input;
+    int arr[100], Us[100], Freq[100], size = 0, endpointer, input;
     cout << "Input Array (Enter -99 to exit): ";
-	for (int i = 0; i < 30; i++){
+	for (int i = 0; i < 100; i++){
 		cin >> input;
 		if (input == -99)
 			break;

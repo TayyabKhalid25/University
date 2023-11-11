@@ -17,9 +17,9 @@ void sort(int arr[], int size)
 
 int main()
 {
-    int arr[20], input, size = 0;
+    int arr[100], input, size = 0;
 	cout << "Enter the Array. Enter -1 to exit: ";
-	for (int i = 0; i < 20; i++){
+	for (int i = 0; i < 100; i++){
 		cin >> input;
 		if (input == -1)
 			break;

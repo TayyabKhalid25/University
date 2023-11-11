@@ -3,9 +3,9 @@ using namespace std;
 
 int main()
 {
-    int arr[20], endpointer = 0, input, element, index;
+    int arr[100], endpointer = 0, input, element, index;
     cout << "Enter the Array. Enter -1 to exit: ";
-	for (int i = 0; i < 20; i++){
+	for (int i = 0; i < 100; i++){
 		cin >> input;
 		if (input == -1)
 			break;
@@ -16,7 +16,7 @@ int main()
     cin >> element;
     cout << "Enter the index where the element is to be added: ";
     cin >> index;
-    if (index < 0 || index > 19){
+    if (index < 0 || index > endpointer - 1){
         cout << "Wrong index entered.";
         return 0;
     }
