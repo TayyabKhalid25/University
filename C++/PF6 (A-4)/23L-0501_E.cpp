@@ -90,6 +90,7 @@ int main()
 		cout << setw(40) << (imperfect_palindrome(word2) == 1 ? "Yes " : "No ");
 		cout << (super_anagrams(word1, word2) == 1 ? "Yes\n\n" : "No\n\n");
 	}
+	in.close();
 
 	return 0;
 }
