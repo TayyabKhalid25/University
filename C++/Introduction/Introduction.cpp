@@ -1,8 +1,7 @@
 #include <iostream>
 #include <iomanip>
-#include <ios>
-#include <cmath>
 using namespace std; 
+
 int main()
 {
 
@@ -52,6 +51,7 @@ int main()
     // comparison of values/variables.
     bool condition = (2 < 10); // will be false.
     // logical operators consist of &&(and), ||(or), !(not).
+    
     // Output Formatting:
     // std::endl and \n have the same usage: Newline.
     // #include <iomanip> is required for functions like std::setw. setw useful for making table.
@@ -68,6 +68,7 @@ int main()
     // std::setfill() will fill the empty spaces left by setw in table with the char specified.
     // https://en.cppreference.com/w/cpp/io/manip Follow link for all output formatting functions.
     // https://en.cppreference.com/w/cpp/header/cmath Follow link for <cmath> functions. All math functions are here.
+   
     // if, elseif,else statements:
     bool Red{false};
     bool Orange{false};
@@ -79,6 +80,7 @@ int main()
     cout << "damn";}
     if (num1 > num2) // u can omit {} if only one statement is to be run.
         cout << "Damn";
+   
     // switch/case statements:
     int tool{ 1 };
     switch (tool)
@@ -93,6 +95,7 @@ int main()
         std::cout << "Wrong option selected";
     }break;
     }
+   
     // Ternary Operators:
     int Max = (num1 > num2) ? num1 : num2;  // int Max{(num1 > num2) ? num1 : num2}; 
     // this is the same as the code below:
@@ -101,11 +104,13 @@ int main()
     }else {
         int max = num2;
     }
+   
     // For Loop:
     // for (iterator{startingpoint}, test, increment). The iterator can be declared outside, so that it can be used outside the loop as well.
     for (int i{ 0 }; (i < 10); i++) {
         cout << "C++ has a lot of options.\n";
     }
+    
     // While Loop:
     int i{ 0 };
     while (i < 10)
@@ -113,49 +118,13 @@ int main()
         cout << "C++ has a lot of options.\n";
         i++;
     }
+    
     // Do While Loop: (Alternative of Repeat until, runs the code first, checks condition later.
     do
     {
         cout << "C++ has a lot of options.\n";
         i++;
     } while (i < 10);
-    // Arrays:
-    int scores[10];  // square brackets used for arrays. arrays start from 0. [10] means 0 - 9, meaning 10 total elements. diff from python.
-    int salary[]{ 1,2,5,11,13,15 }; // u can initialise array with elements, and can also omit size. 
-    int families[5]{ 2,2,1 }; // no need to put values in all elements.
-    // Range based For Loop using array.
-    int sum{ 0 };
-    for (int element : salary) {
-        sum += element;
-    }  // sum will be calculated of all the elements in the array, Range Based For Loop.
-    // std::size(array) will output total elements of array.(C++17)
-    // Before C++17, sizeof(array)/sizeof(array[0]) would be used.
-    char message[5]{ 'H','e','l','l','o' };
-    char message2[6]{ 'H','e','l','l','o' };  // if done by omitting size, no null terminator will be at end of array. 
-    cout << message << endl;  // will print hello, but with garbage characters since no null value was found at the end of array.
-    cout << message2 << endl;  // will print hello normally since a null value was at end of array. Null value is \0.
-    char message3[]{ "Hello World!" };
-    cout << message3 << endl;  //initialising with a string and omitting size will give it a null terminator at the end of array.
-    // can't print arrays other than char datatype using the same methods.
-    // Pointers
-    int* var1{&num1}, * var2{nullptr}, * var3, var4; // * before variable name initialises it as pointer. int pointer can only point to int variables.
-    // All pointers have same size. var4 is regular variable. &num1 gives the address of num1.
-    // All pointers are initialised with nullptr by default. Dont cout pointers with nullptr.
-    int* dpointer = new int; //Dynamically made a pointer to a memory slot permanently, until delete <variablename> is used. Scope is global, can be accessed from anywhere.
-    *dpointer = 77;  // This is how you access data from a pointer variable.
-    delete dpointer;  // Never use delete twice on a pointer.
-    dpointer = nullptr; // just to play it safe, ensure no random memory is accessed.
-
-    // COMPLETE POINTERS SECTION ABOVE (10:46:06).
-    // MOVE POINTER SECTION TO A SEPERATE FILE
-    // MAKE SEPERATE SORT AND SEARCH FILE
-    // MAKE SEPERATE FUNCTIONS FILE
-    // MAKE SEPERATE FILE HANDLING FILE
-    // MAKE SEPERATE OOP FILE
-
-
-
-
 
 
     return 0;
