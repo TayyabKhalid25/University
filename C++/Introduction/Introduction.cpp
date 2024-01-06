@@ -38,7 +38,7 @@ int main()
     // auto is a datatype that will automatically deduce the datatype of the initialiser value and convert into that datatype.
     auto number{ 11 };
     // all arithmetic operators: +,-,*,/(integer division)(cant get fractional numbers unless using double/float),%(modulus).
-    // incrementation and decrementation can be done with ++ and -- respectively. cant use ** or //.
+    // incrementation and decrementation can be done with ++ and -- respectively. there is no ** or //.
     int value{ 5 };
     value = value + 1;
     value++; // has same result of incrementation as above statement. can only increment by 1 using ++.
@@ -106,8 +106,9 @@ int main()
     }
    
     // For Loop:
-    // for (iterator{startingpoint}, test, increment). The iterator can be declared outside, so that it can be used outside the loop as well.
-    for (int i{ 0 }; (i < 10); i++) {
+    // for (iterator{startingpoint}, condition, increment). The iterator can be declared outside, so that it can be used outside the loop as well.
+    for (int i{ 0 }; i < 10; i++) {  // (int i{ 0 }, int j{ 0 }; i < 10 && num < 5; i++, num++)  multiple variables can be declared, 
+        // multiple conditions and increments can also be set.
         cout << "C++ has a lot of options.\n";
     }
     
