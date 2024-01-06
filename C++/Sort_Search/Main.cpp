@@ -66,20 +66,21 @@ int linearSearch(int array[], int n, int x) {
     return -1;
 }
 
-int binarySearch(int array[], int x, int low, int high) {
-
+int binarySearch(int array[], int x, int size) {
+    int lower = 0;
+    int upper = size - 1;
     // Repeat until the pointers low and high meet each other
-    while (low <= high) {
-        int mid = low + (high - low) / 2;
+    while (lower <= upper) {
+        int mid = (lower + upper) / 2;
 
         if (array[mid] == x)
             return mid;
 
         if (array[mid] < x)
-            low = mid + 1;
+            lower = mid + 1;
 
         else
-            high = mid - 1;
+            upper = mid - 1;
     }
     return -1;
 }
