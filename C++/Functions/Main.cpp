@@ -1,5 +1,6 @@
 #include <iostream>
-#include "operations.h"  // Preprocessor where function incr_mult is declared. It is defined in operations.cpp, which will compile with Main.cpp
+#include "operations.h"  // Preprocessor where function incr_mult is declared. It is defined in operations.cpp,
+// which will compile with Main.cpp
 // Header file can also include the definition.
 using namespace std;
 
@@ -40,7 +41,8 @@ double sum(double scores[], int count)  // u can specify size of array parameter
     return score_sum;
 }
 
-double sum(double scores[][5])  // for any multi-dimensional array, you have to specify the number of elements in []'s, only the left most is not mandatory.
+double sum(double scores[][5])  // for any multi-dimensional array, you have to specify the number of elements in []'s,
+// only the left most is not mandatory.
 {
     double score_sum{};
     for (int i = 0; i < 5; i++) {  // std::size can be used here as well, but sad(N/A in uni).
@@ -69,7 +71,8 @@ int main()
     incr_mult(20, 30);  
     double my_scores[]{ 10.5,34.3,4.8,6.5 };
     int length = sizeof(my_scores) / sizeof(my_scores[0]);
-    cout << "result : " << sum(my_scores, length) << endl;  // normally, length of array cannot be calculated using sizeof inside function.
+    cout << "result : " << sum(my_scores, length) << endl;  // normally, length of array cannot be calculated using sizeof inside
+    // function.
 
 	return 0;
 }
