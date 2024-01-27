@@ -25,6 +25,22 @@ int max(int a, int b)  // parameters go here, default is pass by value.
         return b;
 }  // if no value returned for non void functions, compile error, which wont be highlighted usually.
 
+// Overloading function requires that parameter list be different, only different return type wont work.
+double max(double a, double b)  
+{
+    if (a > b)
+        return a;
+    else
+        return b;
+}
+double max(int a, double b)  // This will also work.
+{
+    if (a > b)
+        return a;
+    else
+        return b;
+}
+
 // Function declaration, definition can be given anywhere in file. 
 int min(int a, int b);  
 
@@ -52,7 +68,8 @@ double sum(double scores[][5])  // for any multi-dimensional array, you have to 
     return score_sum;
 }
 
-double sum_3d(const double array[][3][2], int size) {
+double sum_3d(const double array[][3][2], int size) 
+{
 
     double sum{};
     for (int i{}; i < size; ++i) // Loop through rows, only number of rows can be kept undefined and hence variable.
@@ -66,6 +83,27 @@ double sum_3d(const double array[][3][2], int size) {
     return sum;
 }
 
+// Function Templates are used when there are multiple data types that can be used in the same function. The various types are not 
+// generated until you call the function using the data type, effectively saving space.
+template <typename T> T maximum(T a, T b)
+{
+    return (a > b) ? a : b;  // Templates can only be used for data types that support comparison (<,>...) operations.
+}
+template <typename T, typename W> T maximum(T &a, W &b)  // This format can also be used for multiple different types, although
+// not recommended
+{
+    return (a > b) ? a : b;  
+}
+// cout << maximum(a, b); // compiler error since different data types.
+// cout << maximum<double>(a, b);  // if you want to use different data types in the same template, explicitly provide the data type
+// that all variables will be implicitly converted to so that the function can work.
+
+template<> const char* maximum<const char*>(const char* a, const char* b)  // Template specialization can be used to include certain 
+// exceptions to the template, e.g char* cant be compared using operator, so strcmp is used instead.
+{
+    return (strcmp(a, b) > 0) ? a : b;
+}  // Further template concepts come in c++20, not discussed here.
+
 int main()
 {
     incr_mult(20, 30);  
@@ -73,6 +111,8 @@ int main()
     int length = sizeof(my_scores) / sizeof(my_scores[0]);
     cout << "result : " << sum(my_scores, length) << endl;  // normally, length of array cannot be calculated using sizeof inside
     // function.
+    int a = 20;
+    double b = 2.0;
 
 	return 0;
 }
