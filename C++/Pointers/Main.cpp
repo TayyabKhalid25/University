@@ -11,8 +11,9 @@ int main()
     int* dpointer = new int; //Dynamically made a pointer to a memory slot permanently, until delete <variablename> is used. Scope is global, can be accessed from anywhere.
     *dpointer = 77;  // This is how you access data from a pointer variable.
     delete dpointer;  // Never use delete twice on a pointer.
-    dpointer = nullptr; // just to play it safe, ensure no random memory is accessed.
+    dpointer = nullptr; // just to play it safe, ensure no random memory is accessed. 0 or NULL can also be used.
 
+    
     // COMPLETE POINTERS SECTION ABOVE (10:46:06).
 	return 0;
 }
