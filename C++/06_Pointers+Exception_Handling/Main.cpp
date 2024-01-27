@@ -35,8 +35,19 @@ int main()
     {
         cout << "Error Caught: " << ex.what() << endl;
     }
-
-
+    // We can also use std::nothrow as alternative to try/catch.
+    int* pointer1 = new(nothrow) int[10000000000];
+    // Dynamic Arrays:
+    // These are different from simple arrays in working as well, cant use std::size or range based for loops.
+    double* arr = new double[10];  
+    int* points{ new int[5] {} };  // Initialises all elements with 0.
+    int* arr1 = new int[6] {0, 1, 2, 3, 4, 5};  // Cant initialise without size, needs a value.
+    for (int i = 0; i < 6; i++)
+        cout << "Value is: " << arr1[i] << "\nCan also be accessed like this: " << *(arr1 + i) << endl;
+    delete[] arr;  // You cant delete multiple memories with one delete.
+    delete[] points;
+    delete[] arr1;
+    
     
     // COMPLETE POINTERS SECTION ABOVE (10:46:06).
 	return 0;
