@@ -9,9 +9,10 @@ void tokenization(char*& inputArray, char**& dictionary, int& dictionarySize);
 bool check_Dictionary(char**& dictionary, const int& dictionarySize, char*& word, const int& wordLength);
 void add_Dictionary(char**& dictionary, const int& dictionarySize, char*& word, const int& wordLength);
 void print_Dictionary(char**& dictionary, const int& dictionarySize);
+void add_Synonyms(char**& dictionary, const int& dictionarySize, char***& synonyms, int*& synonymCount);
 int countArray(char*& arr);
-void delete_2DArray(char**& array, int& rows);
-
+void delete_2DArray(char**& array, const int& rows);
+void delete_3DArray(char***& arr, const int& rows, int*& columns);
 
 int main()
 {
@@ -30,6 +31,10 @@ int main()
 	
 
 	// Task 2:
+	char*** synonyms = nullptr;  // Declaration of 3D synonyms array.
+	int* synonymCount = nullptr;  // Array which stores amount of synonyms of each word in dictionary.
+
+	add_Synonyms(dictionary, dictionarySize, synonyms, synonymCount);
 
 
 	// Task 3:
@@ -47,9 +52,12 @@ int main()
 	// Delete Arrays:
 	delete[] inputArray; 
 	inputArray = nullptr;
+	delete_3DArray(synonyms, dictionarySize, synonymCount);
 	delete[] p2;
 	p2 = nullptr;
-	delete_2DArray(dictionary, dictionarySize);  // Delete Function.
+	delete[] synonymCount;
+	synonymCount = nullptr;
+	delete_2DArray(dictionary, dictionarySize);  // Delete Function for 2D array.
 	
 	return 0;
 }
@@ -74,6 +82,7 @@ char* input_User()
 	char* inputArray = new char[3000] {'\0'};  // Intitialisation with nullptr prevents errors in single word entries.
 
 	cout << "Enter a Sentence: \n";
+	cin.ignore();
 	cin.getline(inputArray, 3000);
 	cout << "\n\n";
 
@@ -88,7 +97,7 @@ void tokenization(char*& inputArray, char**& dictionary, int& dictionarySize)
 		int wordLength = 0;
 
 		while (isalnum(*(inputArray + i)))  // Forms words from sentence, no specific delimiter since 
-		{									// dictionary should not contain '.', '?'.
+		{									// dictionary should not contain '.', '?'. Char is within 'a'-'z', 'A'-'Z', '0'-'9'.
 			*(word + wordLength++) = *(inputArray + i++);  // This i++ browses the sentence.
 		}
 
@@ -153,25 +162,38 @@ void print_Dictionary(char**& dictionary, const int& dictionarySize)
 	cout << "\n\n";
 }
 
-void synonyms(char **& dictionary, const int& dictionarySize, char***& synonyms, int*& synonymCount)
+void add_Synonyms(char **& dictionary, const int& dictionarySize, char***& synonyms, int*& synonymCount)
 {
-	// Function for creating/appending synonyms array with dictionary size.
-
+	synonyms = new char** [dictionarySize] {nullptr};
+	synonymCount = new int[dictionarySize] {0};
 	for (int i = 0; i < dictionarySize; i++)
 	{
 		char Answer;
 		cout << "Do you want to store synonyms for \"" << *(dictionary + i) << "\" in the dictionary?\n(Y/N): ";
 		cin >> Answer;
-		if (Answer)
+		if (tolower(Answer) == 'y')
 		{
-
+			int numSynonyms;
+			cout << "How many synonyms do you want to store for \"" << *(dictionary + i) << "\"?: ";
+			cin >> numSynonyms;
+			*(synonymCount + i) = numSynonyms;
+			if (numSynonyms > 0)
+			{
+				*(synonyms + i) = new char* [numSynonyms] {nullptr};
+				for (int j = 0; j < numSynonyms; j++)
+				{
+					char* input = new char[20]{ '\0' };
+					cout << "Enter synonym " << j + 1 << ": ";
+					cin >> input;
+					int charCount = countArray(input);
+					*(*(synonyms + i) + j) = new char[charCount + 1] {'\0'};  // +1 for nullptr.
+					for (int k = 0; k < charCount; k++)
+						*(*(*(synonyms + i) + j) + k) = *(input + k);  // Copy character letter by letter into synonyms.
+				}
+				cout << "\nSynonym(s) stored successfully!\n\n";
+			}
 		}
-		// ask if want to synonym, then how many synonym, then update synonym count and array, then get synonym from user,
-		// update synonym array with length of string, copy string into array, repeat till synonym count finished, repeat till end of
-		// dictionary size.
-		
 	}
-
 }
 
 int countArray(char*& arr)
@@ -182,13 +204,30 @@ int countArray(char*& arr)
 	return count;
 }
 
-void delete_2DArray(char**& arr, int& rows)
+void delete_2DArray(char**& arr, const int& rows)
 {
 	if (arr)
 	{
 		for (int i = 0; i < rows; i++)
 		{
 			delete[] * (arr + i);
+		}
+		delete[] arr;
+		arr = nullptr;
+	}
+}
+
+void delete_3DArray(char***& arr, const int& rows, int*& columns)
+{
+	if (arr)  // if array exists.
+	{
+		for (int i = 0; i < rows; i++)
+		{
+			if (*(arr + i)) {  // if synonym(s) exist.
+				for (int j = 0; j < *(columns + i); j++)  // synonym count specifies how many char arrays there are.
+					delete[] * (*(arr + i) + j);
+				delete[] * (arr + i);
+			}
 		}
 		delete[] arr;
 		arr = nullptr;
