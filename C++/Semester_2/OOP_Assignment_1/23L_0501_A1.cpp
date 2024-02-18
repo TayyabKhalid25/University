@@ -134,14 +134,17 @@ int check_Dictionary(char**& dictionary, const int& dictionarySize, char*& word,
 {
 	for (int i = 0; i < dictionarySize; i++)
 	{
-		int sameLetters = 0;
-		for (int j = 0; j < wordLength; j++)
-		{
-			if (to_Lower(*(*(dictionary + i) + j)) == to_Lower(*(word + j)))  // Check each character.
-				sameLetters++;
-		}
-		if (sameLetters == wordLength)  // All letters are same, hence same word.
-			return i;  // Returns index of dictionary where word is located.
+	    if (countArray(*(dictionary + i)) == wordLength)  // Ensures that words that are part of other words are not considered the same.
+	    {
+			int sameLetters = 0;
+			for (int j = 0; j < wordLength; j++)
+			{
+				if (to_Lower(*(*(dictionary + i) + j)) == to_Lower(*(word + j)))  // Check each character.
+					sameLetters++;
+			}
+			if (sameLetters == wordLength)  // All letters are same, hence same word.
+				return i;  // Returns index of dictionary where word is located.
+	    }
 	}
 	return -1;
 }
