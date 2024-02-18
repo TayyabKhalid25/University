@@ -51,6 +51,33 @@ int main()
     delete[] points;
     delete[] arr1;
 
+    // 2D Array declaration with 2 **, each will contain an array pointing to arrays, hence int*.
+    int rows = 5, columns = 10, z = 15;
+    int** array2D = new int* [rows];  
+    for (int i = 0; i < rows; i++)
+        *(array2D + i) = new int[columns];  // Offset Notation for arrays.
+    // 3D Array declaration, same concept, increase *.
+    int*** array3D = new int** [rows];  
+    for (int i = 0; i < rows; i++)
+    {
+        *(array3D + i) = new int* [columns];
+        for (int j = 0; j < columns; j++)
+            *(*(array3D + i) + j) = new int[z];  // Subscript (normal) Notation would be array3D[i][j].
+    }
+
+    // Deleting 2D and 3D arrays requires that you delete each individual array seperately.
+    for (int i = 0; i < rows; i++)
+        delete[] * (array2D + i);
+    delete[] array2D;
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < columns; j++)
+            delete[] * (*(array3D + i) + j);
+        delete[] * (array3D + i);
+    }
+    delete[] array3D;
+
+
     // References:
     int num3 = 22;
     int& ref1 = num1;
