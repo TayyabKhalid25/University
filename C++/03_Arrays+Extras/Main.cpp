@@ -23,6 +23,8 @@ int main()
     int arr1[10] = { 0 };  // This and above one will initialise all elements with 0.
     int salary[]{ 1,2,5,11,13,15 }; // u can initialise array with elements, and can also omit size. 
     int families[5]{ 2,2,1 }; // no need to put values in all elements.
+    scores[1] = 20;  // you can access second element using subscript notation.
+    *(scores + 1) = 20;  // you can access second element using offset notation as well.
     // Range based For Loop using array:
     int sum{ 0 };
     for (int element : salary) 

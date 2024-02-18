@@ -108,17 +108,13 @@ void tokenization(char*& inputArray, char**& dictionary, int& dictionarySize)
 		int wordLength = 0;
 
 		while (isalnum(*(inputArray + i)))  // Forms words from sentence, no specific delimiter since 
-		{									// dictionary should not contain '.', '?'. Char is within 'a'-'z', 'A'-'Z', '0'-'9'.
+		// dictionary should not contain '.', '?'. Char is within 'a'-'z', 'A'-'Z', '0'-'9'.
 			*(word + wordLength++) = *(inputArray + i++);  // This i++ browses the sentence.
-		}
 
 		// Checks if word is formed and whether it already exists in dictionary.
 		if (wordLength != 0 && check_Dictionary(dictionary, dictionarySize, word, wordLength) == -1) 
-		{
 			// Dictionary size is post incremented and wordlength is pre incremented to accomodate null pointer.
 			add_Dictionary(dictionary, dictionarySize++, word, ++wordLength); // Add to dictionary function
-		}
-
 		delete[] word;
 	}
 	cout << "Dictionary has been updated.\n\n";
@@ -146,30 +142,22 @@ void add_Dictionary(char**& dictionary, const int& dictionarySize, char*& word, 
 	dictionary = new char* [dictionarySize + 1];
 	
 	for (int i = 0; i < dictionarySize; i++)  // Copies existing words into expanded dictionary.
-	{
 		*(dictionary + i) = *(temp + i);
-	}
-	
+
 	*(dictionary + dictionarySize) = new char[wordLength] {'\0'};  // Declare new word's array.
 	
 	for (int i = 0; i < wordLength; i++)  // Copying word into dictionary.
-	{
 		*(*(dictionary + dictionarySize) + i) = *(word + i);
-	}
 
 	if (temp)  // Ensures not nullptr pointer.
-	{
 		delete[] temp;  // Delete old dictionary.
-	}
 }
 
 void print_Dictionary(char**& dictionary, const int& dictionarySize)
 {
 	cout << "There are " << dictionarySize << " unique words in the dictionary. They are as follows:\n";
 	for (int i = 0; i < dictionarySize; i++)
-	{
 		cout << *(dictionary + i) << endl;
-	}
 	cout << "\n\n";
 }
 
@@ -230,9 +218,8 @@ void replace_With_Synonyms(char*& inputArray, char**& dictionary, int& dictionar
 		int wordLength = 0;
 
 		while (isalnum(*(inputArray + i)))  // Forms words from sentence, no specific delimiter since 
-		{									// dictionary should not contain '.', '?'. Char is within 'a'-'z', 'A'-'Z', '0'-'9'.
+		//dictionary should not contain '.', '?'. Char is within 'a'-'z', 'A'-'Z', '0'-'9'.
 			*(word + wordLength++) = *(inputArray + i++);  // This i++ browses the sentence.
-		}
 
 		// Checks if word is formed.
 		if (wordLength != 0)
@@ -264,9 +251,7 @@ int print_Select_Choice(char***& synonyms, int*& synonymCount, const int& index)
 {
 	cout << "The following synonyms have been found: \n";
 	for (int j = 0; j < *(synonymCount + index); j++)
-	{
 		cout << j + 1 << ")\t" << *(*(synonyms + index) + j) << endl;
-	}
 	int choice;
 	cout << "Enter number corresponding to synonym(-1 to exit): ";
 	cin >> choice;
@@ -304,9 +289,7 @@ void delete_2DArray(char**& arr, const int& rows)
 	if (arr)
 	{
 		for (int i = 0; i < rows; i++)
-		{
 			delete[] * (arr + i);
-		}
 		delete[] arr;
 		arr = nullptr;
 	}
@@ -318,7 +301,8 @@ void delete_3DArray(char***& arr, const int& rows, int*& columns)
 	{
 		for (int i = 0; i < rows; i++)
 		{
-			if (*(arr + i) != nullptr) {  // if synonym(s) exist.
+			if (*(arr + i) != nullptr) // if synonym(s) exist.
+			{  
 				for (int j = 0; j < *(columns + i); j++)  // synonym count specifies how many char arrays there are.
 					delete[] * (*(arr + i) + j);
 				delete[] * (arr + i);
