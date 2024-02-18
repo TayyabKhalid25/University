@@ -6,7 +6,9 @@ using namespace std;
 char* input_User();
 char* input_File();
 void tokenization(char*& inputArray, char**& dictionary, int& dictionarySize);
+bool isAlphaNumeric(const char& character);
 int check_Dictionary(char**& dictionary, const int& dictionarySize, char*& word, const int& wordLength);
+char to_Lower(const char& character);
 void add_Dictionary(char**& dictionary, const int& dictionarySize, char*& word, const int& wordLength);
 void print_Dictionary(char**& dictionary, const int& dictionarySize);
 void add_Synonyms(char**& dictionary, const int& dictionarySize, char***& synonyms, int*& synonymCount);
@@ -14,8 +16,8 @@ void update_Synonyms(char***& synonyms, const int& index, const int& numSynonyms
 int countArray(char*& arr); 
 void replace_With_Synonyms(char*& inputArray, char**& dictionary, int& dictionarySize, char***& synonyms, int*& synonymCount, const int& synonymSize);
 int print_Select_Choice(char***& synonyms, int*& synonymCount, const int& index);
-void replace_Word(char*& inputArray, const int& arrayIndex, char*& word, char*& newWord);
-void adjust_Sentence(char*& inputArray, const int& arrayIndex, int factor);
+void replace_Word(char*& inputArray, int& arrayIndex, char*& word, char*& newWord);
+void adjust_Sentence(char*& inputArray, int& arrayIndex, int factor);
 void delete_2DArray(char**& array, const int& rows);
 void delete_3DArray(char***& arr, const int& rows, int*& columns);
 
@@ -93,7 +95,8 @@ char* input_User()
 	char* inputArray = new char[3000] {'\0'};  // Intitialisation with nullptr prevents errors in single word entries.
 
 	cout << "Enter a Sentence: \n";
-	cin.ignore();
+	if (cin.peek() == '\0' || cin.peek() == '\n')  // if ignored and nothing in buffer, then first char of input is lost.
+		cin.ignore();
 	cin.getline(inputArray, 3000);
 	cout << endl;
 
@@ -107,7 +110,7 @@ void tokenization(char*& inputArray, char**& dictionary, int& dictionarySize)
 		char* word = new char[20] {'\0'};  // Initialise with null pointer, 20 is limit of characters in a word.
 		int wordLength = 0;
 
-		while (isalnum(*(inputArray + i)))  // Forms words from sentence, no specific delimiter since 
+		while (isAlphaNumeric(*(inputArray + i)))  // Forms words from sentence, no specific delimiter since 
 		// dictionary should not contain '.', '?'. Char is within 'a'-'z', 'A'-'Z', '0'-'9'.
 			*(word + wordLength++) = *(inputArray + i++);  // This i++ browses the sentence.
 
@@ -120,6 +123,13 @@ void tokenization(char*& inputArray, char**& dictionary, int& dictionarySize)
 	cout << "Dictionary has been updated.\n\n";
 }
 
+bool isAlphaNumeric(const char& character)
+{
+	if ((character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') || (character >= '0' && character <= '9'))
+		return true;
+	return false;  // else return false.
+}
+
 int check_Dictionary(char**& dictionary, const int& dictionarySize, char*& word, const int& wordLength)
 {
 	for (int i = 0; i < dictionarySize; i++)
@@ -127,13 +137,20 @@ int check_Dictionary(char**& dictionary, const int& dictionarySize, char*& word,
 		int sameLetters = 0;
 		for (int j = 0; j < wordLength; j++)
 		{
-			if (tolower(*(*(dictionary + i) + j)) == tolower(*(word + j)))  // Check each character.
+			if (to_Lower(*(*(dictionary + i) + j)) == to_Lower(*(word + j)))  // Check each character.
 				sameLetters++;
 		}
 		if (sameLetters == wordLength)  // All letters are same, hence same word.
 			return i;  // Returns index of dictionary where word is located.
 	}
 	return -1;
+}
+
+char to_Lower(const char& character)
+{
+	if (character >= 'A' && character <= 'Z')
+		return (character - ('A' - 'a'));
+	return character;  // else return as is.
 }
 
 void add_Dictionary(char**& dictionary, const int& dictionarySize, char*& word, const int& wordLength)
@@ -170,7 +187,7 @@ void add_Synonyms(char **& dictionary, const int& dictionarySize, char***& synon
 		char answer;
 		cout << "Do you want to store synonyms for \"" << *(dictionary + i) << "\" in the dictionary?\n(Y/N): ";
 		cin >> answer;
-		if (tolower(answer) == 'y')
+		if (to_Lower(answer) == 'y')
 		{
 			int numSynonyms;
 			cout << "How many synonyms do you want to store for \"" << *(dictionary + i) << "\"?: ";
@@ -191,7 +208,8 @@ void update_Synonyms(char***& synonyms, const int& index, const int& numSynonyms
 	{
 		char* input = new char[20] { '\0' };
 		cout << "Enter synonym " << j + 1 << ": ";
-		cin.ignore();
+		if (cin.peek() == '\0' || cin.peek() == '\n')
+			cin.ignore();
 		cin.getline(input, 20);
 		int charCount = countArray(input);
 		*(*(synonyms + index) + j) = new char[charCount + 1] {'\0'};  // +1 for nullptr.
@@ -217,7 +235,7 @@ void replace_With_Synonyms(char*& inputArray, char**& dictionary, int& dictionar
 		char* word = new char[20] {'\0'};  // Initialise with null pointer, 20 is limit of characters in a word.
 		int wordLength = 0;
 
-		while (isalnum(*(inputArray + i)))  // Forms words from sentence, no specific delimiter since 
+		while (isAlphaNumeric(*(inputArray + i)))  // Forms words from sentence, no specific delimiter since 
 		//dictionary should not contain '.', '?'. Char is within 'a'-'z', 'A'-'Z', '0'-'9'.
 			*(word + wordLength++) = *(inputArray + i++);  // This i++ browses the sentence.
 
@@ -232,7 +250,7 @@ void replace_With_Synonyms(char*& inputArray, char**& dictionary, int& dictionar
 				char answer;
 				cout << "Synonym(s) for the word \"" << word << "\" found in dictionary. Would you like to replace it? (Y/N): ";
 				cin >> answer;
-				if (tolower(answer) == 'y')
+				if (to_Lower(answer) == 'y')
 				{
 					// Function which prints synonyms and allows user to enter choice of which to replace with.
 					int choice = print_Select_Choice(synonyms, synonymCount, dictionaryIndex);
@@ -249,17 +267,17 @@ void replace_With_Synonyms(char*& inputArray, char**& dictionary, int& dictionar
 
 int print_Select_Choice(char***& synonyms, int*& synonymCount, const int& index)
 {
-	cout << "The following synonyms have been found: \n";
+	cout << "\nThe following synonyms have been found: \n";
 	for (int j = 0; j < *(synonymCount + index); j++)
 		cout << j + 1 << ")\t" << *(*(synonyms + index) + j) << endl;
 	int choice;
-	cout << "Enter number corresponding to synonym(-1 to exit): ";
+	cout << "\nEnter number corresponding to synonym(-1 to exit): ";
 	cin >> choice;
 	choice--; // Compensates for user friendly index number.
 	return choice;
 }
 
-void replace_Word(char*& inputArray, const int& arrayIndex, char*& word, char*& newWord)
+void replace_Word(char*& inputArray, int& arrayIndex, char*& word, char*& newWord)
 {
 	int wordLength = countArray(word);
 	int synonymLength = countArray(newWord);
@@ -267,10 +285,12 @@ void replace_Word(char*& inputArray, const int& arrayIndex, char*& word, char*& 
 	// Put synonym into input array.
 	for (int i = 0; i < synonymLength; i++)
 		*(inputArray + arrayIndex + i - wordLength) = *(newWord + i);
-	cout << '\"' << word << "\" replaced with \"" << newWord << "\" successfully!\n\n";
+	// current index of paragraph is updated with line, so that replaced word is not counted again.
+	arrayIndex += synonymLength - wordLength;  
+	cout << "\n\"" << word << "\" replaced with \"" << newWord << "\" successfully!\n\n";
 }
 
-void adjust_Sentence(char*& inputArray, const int& arrayIndex, int factor)
+void adjust_Sentence(char*& inputArray, int& arrayIndex, int factor)
 {
 	if (factor > 0)  // Synonym > current word.
 	{   // Cycle input array forward(right) to accomodate bigger word. 
