@@ -4,6 +4,7 @@ using namespace std;
 #define MaxChar 80
 
 // Function Declarations:
+// Part 1:
 int** InputMatrix(ifstream& fin, int& rows, int& cols);
 void OutputMatrix(int** matrix, const int& ROWS, const int& COLS);
 int** AddMatrix(int** matrixA, int** matrixB, const int& ROWS, const int& COLS);
@@ -12,6 +13,7 @@ bool IsSymmetric(int** matrix, const int& ROWS, const int& COLS);
 void InterchangeRows(int** matrix, const int& ROWS, const int& COLS);
 void InterchangeRows(int*& row1, int*& row2);
 void delete_2DArray(int**& arr, const int& rows);
+// Part 2:
 void fileInput(ifstream& fin, char*& str1, char*& str2);
 int stringLength(char* str);
 void StringConcatenate(char*& str1, char* str2);
@@ -23,17 +25,18 @@ char** InverseStringTokens(char* sentence, int& tokenSize);
 char* ReverseSentence(char* sentence);
 int CompareString(char* cstring1, char* cstring2);
 void DisplayStringList(char** list, const int& listSize);
-
-void studentList();
-
+void studentList(ifstream& fin);
 void sortNames(char** list, const int& listSize);
-
 void swapNames(char*& name1, char*& name2);
+void CompressString(char* cstring);
+void adjustString(char* inputArray, const int& arrayIndex, const int& factor);
+void delete_2DArray(char** arr, const int& rows);
 
 int main()
 {
 	// PART 1: (Matrix Manipulation)
 
+	cout << "PART 1: (Matrix Manipulation)";
 	int rowsA, colsA, rowsB, colsB, rowsC, colsC;  // rowsA => rows of matrixA, rowsB => rows of matrixB. 
 	ifstream fin("InputFile.txt");
 
@@ -103,9 +106,59 @@ int main()
 	delete_2DArray(transposeC, colsC);
 
 	// PART 2: (String Manipulation)
+	
+	cout << "\vPART 2: (String Manipulation)\n\n";
+	char* str1 = nullptr, * str2 = nullptr;
+	fin = ifstream("Data.txt");
+	fileInput(fin, str1, str2);
 
+	// Testing String Concatenate:
+	cout << "\nTesting String Concatenation:\n\n";
+	cout << "String 1:\t\"" << str1 << "\"\nString 2:\t\"" << str2 << "\"\n";
+	StringConcatenate(str1, str2);
+	cout << "\nAfter Concatenation:\n";
+	cout << "String 1:\t\"" << str1 << "\"\nString 2:\t\"" << str2 << "\"\n";
 
+	// Testing StringTokens:
+	cout << "\vTesting StringTokens:\n\nTokens of String 1 are as follows:\n\n";
+	int tokenSize = 0;
+	char** tokens = StringTokens(str1, tokenSize);
+	DisplayStringList(tokens, tokenSize);
+	delete_2DArray(tokens, tokenSize);
+	tokenSize = 0;
 
+	// Testing InverseStringTokens:
+	cout << "\vTesting InverseStringTokens:\n\nTokens of the string in reverse order are as follows:\n\n";
+	tokens = InverseStringTokens(str1, tokenSize);
+	DisplayStringList(tokens, tokenSize);
+	delete_2DArray(tokens, tokenSize);
+	tokenSize = 0;
+
+	// Testing ReverseSentence:
+	cout << "\vTesting ReverseSentence:\n";
+	char* reverseStr = ReverseSentence(str1);
+	cout << "Reverse Sentence of String1 is:\t\"" << reverseStr << "\"\n\n";
+
+	// Testing Student List:
+	cout << "\nStudent List Functionality:\n\n";
+	studentList(fin);
+
+	// Deleting All arrays formed on heap, and closing file:
+	fin.close();
+	delete[] str1;
+	str1 = nullptr;
+	delete[] str2;
+	str2 = nullptr;
+	delete[] reverseStr;
+	reverseStr = nullptr;
+
+	// Testing CompressString:
+	str1 = new char[MaxChar] {"bbabbbbbcccddddddddddeffffg"};
+	cout << "\vTesting CompressString:\n\nString: \"" << str1;
+	CompressString(str1);
+	cout << "\"\nString after Compression: \"" << str1 << "\"\n";
+	delete[] str1;
+	str1 = nullptr;
 
 	return 0;
 }
@@ -257,12 +310,12 @@ void StringConcatenate(char*& str1, char* str2)  // Calculates length of appende
 char** StringTokens(char* sentence, int& tokenSize)
 {
 	char** tokens = nullptr;
-	for (int i = 0; sentence[i] != '\0'; i++)  // This i++ skips space characters, if not \0.
+	for (int i = 0; sentence[i - 1] != '\0'; i++)  // This i++ skips space characters, if not \0.
 	{
 		char* word = new char[MaxChar] {'\0'};  
 		int wordLength = 0;
 
-		while (!isSpace(*(sentence + i)))  // Forms words from sentence, delimiter is space. 
+		while (!isSpace(sentence[i]))  // Forms words from sentence, delimiter is space. 
 			word[wordLength++] = sentence[i++];  // This i++ browses the sentence.
 
 		// Checks if word is formed.
@@ -277,7 +330,7 @@ char** StringTokens(char* sentence, int& tokenSize)
 
 bool isSpace(const char& character)
 {
-	if (character == ' ' || character == '\t' || character == '\n')
+	if (character == ' ' || character == '\t' || character == '\n' || character == '\0')
 		return true;
 	return false;  // else return false.
 }
@@ -313,8 +366,8 @@ char** InverseStringTokens(char* sentence, int& tokenSize)
 	for (int i = 0; i < tokenSize / 2; i++)  // Runs till half of array, replacing 1st element with last, 2nd with 2nd last, etc.
 	{
 		char* temp = tokens[i];
-		tokens[i] = tokens[tokenSize - i];
-		tokens[tokenSize - i] = temp;
+		tokens[i] = tokens[tokenSize - i - 1];
+		tokens[tokenSize - i - 1] = temp;
 	}
 
 	return tokens;
@@ -331,13 +384,15 @@ char* ReverseSentence(char* sentence)
 	int i = 0;
 	for (int currentToken = 0; currentToken < tokenSize; currentToken++)  
 	{
-		int wordLength = stringLength(tokens[i]);
+		int wordLength = stringLength(tokens[currentToken]);
 		for (int j = 0; j < wordLength; j++)
 			newSentence[i++] = tokens[currentToken][j];  // j is index of current token/word, i is incremented to parse next char.
-		newSentence[i++] = ' ';  // Appends space b/w each word.
+		if (currentToken != tokenSize - 1)
+			newSentence[i++] = ' ';  // Appends space b/w each word.
 	}
 	newSentence[i] = '\0';  // Ends sentence with nullptr.
 
+	delete_2DArray(tokens, tokenSize);
 	return newSentence;
 }
 
@@ -365,16 +420,17 @@ int CompareString(char* cstring1, char* cstring2)
 void DisplayStringList(char** list, const int& listSize)
 {
 	for (int i = 0; i < listSize; i++)
-		cout << i + 1 << ")\t" << list[i] << endl;
+		cout << list[i] << endl;
 }
 
-void studentList()
+void studentList(ifstream& fin)
 {
-	char** list = nullptr;
-	int listSize = 0;
+	int listSize;
+	fin >> listSize;
+	fin.ignore();
+	char** list = new char* [listSize];
 	// Read all names from file and add into list.
-	ifstream fin("Data.txt");
-	while (!fin.eof())
+	for (int i = 0; i < listSize; i++)
 	{
 		char* name = new char[MaxChar] {'\0'};
 		fin.getline(name, MaxChar);
@@ -382,11 +438,10 @@ void studentList()
 
 		if (nameLength != 0)
 			// List size is post incremented and namelength is pre incremented to accomodate null pointer.
-			add_Word(list, listSize++, name, ++nameLength); // Same function used as tokenization.
+			add_Word(list, i, name, ++nameLength); // Same function used as tokenization.
 
 		delete[] name;
 	}
-	fin.close();
 
 	cout << "\nList BEFORE sorting:\n";
 	DisplayStringList(list, listSize);
@@ -395,6 +450,8 @@ void studentList()
 
 	cout << "\nList AFTER sorting:\n";
 	DisplayStringList(list, listSize);
+
+	delete_2DArray(list, listSize);
 }
 
 void sortNames(char** list, const int& listSize)
@@ -421,11 +478,32 @@ void swapNames(char*& name1, char*& name2)
 void CompressString(char* cstring)
 {
 	int length = stringLength(cstring);
-	for (int i = 0; i < length; i++)
+	for (int i = 0; cstring[i] != '\0'; i++)
 	{
-		while (cstring[i])
-		{
+		int repetition = 0;  // Denotes number of consecutive occurences of char.
+		for (int j = i; cstring[j] == cstring[j + 1]; j++)
+			repetition++;
 
-		}
+		if (repetition)  // Checks if character is repeated.
+			adjustString(cstring, i, repetition); 
+
+	}
+}
+
+void adjustString(char* inputArray, const int& arrayIndex, const int& factor)
+{
+	// Cycle array backward(left) to remove repeated occurences.
+	for (int i = arrayIndex + 1; i < stringLength(inputArray) + 1; i++)  // index + 1 for pointing to 1st repetition of char.
+		inputArray[i] = inputArray[i + factor];
+}
+
+void delete_2DArray(char** arr, const int& rows)
+{
+	if (arr)  // Checks if array is not nullptr.
+	{
+		for (int i = 0; i < rows && arr[i]; i++)  // Checks if each index contains pointer to array, and not nullptr.
+			delete[] arr[i];
+		delete[] arr;
+		arr = nullptr;
 	}
 }
