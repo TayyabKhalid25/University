@@ -127,7 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="L230501-BCS2E.cpp" />
+    <ClCompile Include="23L-0501_A2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Data.txt" />
