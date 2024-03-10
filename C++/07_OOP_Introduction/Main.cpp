@@ -20,14 +20,13 @@ struct student  // The user-defined data type student is now available.
 	int ID;
 	string name;
 	string address;
-};
+};  // Semi-colon necessary.
+
 struct 
 {
 	int num1;
 	double num2;
 } group1, group2;  // group1 & group2 defined with above members. This is valid c++ code, but not recommended.
-
-
 
 // Sample Class below for Syntax.
 class BankAccount 
@@ -84,10 +83,9 @@ public:
 	}
 
 	// Destructors are called for each instance/object when they go out of scope, in opposite order of 
-	// declaration of objects, e.g end of main. 
-	// If the object is created dynamically(new myClass), then it is called during delete statement.
-	// Destructors are only relevant if we use dynamic memory allocation within classes, to delete 
-	// said memory from heap.
+	// declaration of objects, e.g end of main. If the object is created dynamically(new myClass),
+	// then it is called during delete statement. Destructors are only relevant if we use dynamic memory
+	// allocation within classes, to delete said memory from heap.
 
 	// Destructor:
 	~BankAccount() {
@@ -95,6 +93,8 @@ public:
 		delete balance;
 	}
 
+	// Setter and Getter set and get values of variables within a class respectively.
+	// Setters:
 	void setAccountNumber(int a) {
 		accountNumber = a;
 	}
@@ -104,7 +104,8 @@ public:
 	void setBalance(float a) {
 		*balance = a;
 	}
-	int getAccountNumber() const {
+	// Getters:
+	int getAccountNumber() const {  // const after function name allows this function to be called even if the object is declared with const keyword.
 		return accountNumber;
 	}
 	string getAccountHolderName() const {
@@ -121,9 +122,10 @@ public:
 
 int main()
 {
+	// Write implementation of above classes nd structs here.
 
 
 
-	// Resume from 20:15:40
+	// Resume from 21:32:00
 	return 0;
 }
