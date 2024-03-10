@@ -1,0 +1,3 @@
+This is a string passed similar to cout method.
+This is a string passed by write method.
+This is the third string.
