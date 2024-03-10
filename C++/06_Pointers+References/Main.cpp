@@ -51,7 +51,7 @@ int main()
     delete[] points;
     delete[] arr1;
 
-    // 2D Array declaration with 2 **, each will contain an array pointing to arrays, hence int*.
+    // 2D Array declaration with 2 **, each will contain an array of pointers pointing to arrays, hence int*.
     int rows = 5, columns = 10, z = 15;
     int** array2D = new int* [rows];  
     for (int i = 0; i < rows; i++)

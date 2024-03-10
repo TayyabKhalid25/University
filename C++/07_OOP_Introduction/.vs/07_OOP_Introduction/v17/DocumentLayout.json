@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\tayya\\Desktop\\University\\C\u002B\u002B\\07_OOP_Introduction\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9E945AD2-D7D5-42CA-BA43-E70306B3A7B6}|07_OOP_Introduction.vcxproj|C:\\Users\\tayya\\Desktop\\University\\C\u002B\u002B\\07_OOP_Introduction\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{9E945AD2-D7D5-42CA-BA43-E70306B3A7B6}|07_OOP_Introduction.vcxproj|solutionrelative:Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Main.cpp",
+              "DocumentMoniker": "C:\\Users\\tayya\\Desktop\\University\\C\u002B\u002B\\07_OOP_Introduction\\Main.cpp",
+              "RelativeDocumentMoniker": "Main.cpp",
+              "ToolTip": "C:\\Users\\tayya\\Desktop\\University\\C\u002B\u002B\\07_OOP_Introduction\\Main.cpp",
+              "RelativeToolTip": "Main.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAyAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-03-10T02:18:03.388Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -2,6 +2,33 @@
 #include <iomanip>
 using namespace std; 
 
+// Enumeration is a non-composite user defined data type used to define named integral constants. By default, each constant is assigned an integer value starting from 0. 
+enum Weekday {
+    Monday,     // Assigned value: 0
+    Tuesday,    // Assigned value: 1
+    Wednesday,  // Assigned value: 2
+    Thursday,   // Assigned value: 3
+    Friday,     // Assigned value: 4
+    Saturday,   // Assigned value: 5
+    Sunday      // Assigned value: 6
+};
+
+enum Month {
+    January = 1,
+    February,  // Assigned value: 2 (automatically incremented by 1 from January)
+    March,     // Assigned value: 3 (automatically incremented by 1 from February)
+    April,     // Assigned value: 4 (automatically incremented by 1 from March)
+    May,       // Assigned value: 5 (automatically incremented by 1 from April)
+    June,      // Assigned value: 6 (automatically incremented by 1 from May)
+    July,      // Assigned value: 7 (automatically incremented by 1 from June)
+    August,    // Assigned value: 8 (automatically incremented by 1 from July)
+    September, // Assigned value: 9 (automatically incremented by 1 from August)
+    October,   // Assigned value: 10 (automatically incremented by 1 from September)
+    November,  // Assigned value: 11 (automatically incremented by 1 from October)
+    December   // Assigned value: 12 (automatically incremented by 1 from November)
+};
+
+
 int main()
 {
 
