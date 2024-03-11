@@ -58,10 +58,12 @@ public:
 	// either we make a default constructor, or include default arguments to eliminate the need for it.
 	
 	// Parameterised Constructor, called when parameters given:
-	BankAccount(int a = -1, string b = "temp", float c = 0.0f) { 
-		accountNumber = a;
-		accountHolderName = b;
-		*balance = c;
+	BankAccount(int accountNumber = -1, string accountHolderName = "temp", float balance = 0.0f) {
+		// "this" is a hidden pointer for all classes, which points to address of current object. 
+		// It is useful when parameter name and member name are the same, to differentiate between them.
+		this->accountNumber = accountNumber;
+		this->accountHolderName = accountHolderName;
+		*this->balance = balance;
 	}
 	
 	// Copy Constructor, called when passing an instance/object of the same class, or assigning the 
@@ -72,7 +74,7 @@ public:
 	// performs a member-wise shallow copy, that can be unwanted in the case of memory on heap.
 
 	// Copy Constructor:
-	BankAccount(const BankAccount& a){  // const to prevent modification and all function calls,
+	BankAccount(const BankAccount& a){  // const to prevent modification and all function calls which are not defined with const,
 	// passing by reference(&) is required to prevent recursive duplication from starting. 
 		accountNumber = a.accountNumber;
 		accountHolderName = a.accountHolderName;
@@ -82,10 +84,13 @@ public:
 		// with const, e.g int getAccountNumber();.
 	}
 
-	// Destructors are called for each instance/object when they go out of scope, in opposite order of 
+	// Destructors are called for each instance/object when they go out of scope, in OPPOSITE/REVERSE order of 
 	// declaration of objects, e.g end of main. If the object is created dynamically(new myClass),
 	// then it is called during delete statement. Destructors are only relevant if we use dynamic memory
-	// allocation within classes, to delete said memory from heap.
+	// allocation within classes, to delete said memory from heap. Common problem is when object is passed
+	// by value to a function, so a shallow copy is made, and when the copy goes out of scope, the 
+	// destructor will be called twice, hence any delete statements within will also be called twice,
+	// resulting in error. Solution is to always pass objects by reference to functions.
 
 	// Destructor:
 	~BankAccount() {
@@ -98,12 +103,25 @@ public:
 	void setAccountNumber(int a) {
 		accountNumber = a;
 	}
-	void setAccountHolderName(string a) {
-		accountHolderName = a;
+	// Chained calls using pointers in Setters:
+	BankAccount* setAccountHolderName(string accountHolderName) {
+		this->accountHolderName = accountHolderName;
+		return this;  // As the pointer is returned, you can use -> operator to call further functions.(example in main)
 	}
-	void setBalance(float a) {
-		*balance = a;
+	BankAccount* setBalance(float balance) {
+		*this->balance = balance;
+		return this;
 	}
+	// Chained calls using addresses in Setters:
+	//BankAccount& setAccountHolderName(string accountHolderName) {
+	//	this->accountHolderName = accountHolderName;
+	//	return *this;  // As the address is returned, you can use . operator to call further functions.(example in main)
+	//}
+	//BankAccount& setBalance(float balance) {
+	//	*this->balance = balance;
+	//	return *this;
+	//}
+
 	// Getters:
 	int getAccountNumber() const {  // const after function name allows this function to be called even if the object is declared with const keyword.
 		return accountNumber;
@@ -123,10 +141,36 @@ public:
 int main()
 {
 	// Write implementation of above classes nd structs here.
+	group1.num1 = 20;  // The global variable created in beginning of struct is available here.
+	student student1;  // An object/instance created of the struct student.
+	student student2{ 10, "Tayyab", "Somewhere"};  // The object is also initialised with values for the variables/members within.
+	student student3 = student2;  // Not tested, but expect a shallow copy to be made.
+	student1.ID = 100;  // Method for accessing variables/members of object.
+	
+	student* studentPtr = new student{ student1 };  // studentPtr points to memory on heap, object initialised with values of student1.
+	(*studentPtr).name = "Wahaj";  // Method for accessing variables/members of objects made on heap.
+	studentPtr->name = "Wahaj";  // Better implementation of above line.
+	
 	BankAccount account1;  // Object account1 of class BankAccount created with default constructor.
+	BankAccount account2(2004, "Tayyab", 500.5);  // Object account2 created with parameterised constructor.
+	BankAccount account3(account2);  // Object account3 created with copy constructor, it has same values as account2 now.
+	account1.setAccountHolderName("Wahaj");  // Using setter to set new value of member. Similarly use getter to get value.
+	// BankAccount account3 = account2;  // Same as above line.
+	// BankAccount account3{ account2 };  // Same as above line.
+	
+	BankAccount* accountPtr = new BankAccount(account1);  // accountPtr points to memory on heap, object initialised with values of account1.
+	cout << (*accountPtr).getBalance() << "\t<-- Balance of accountptr\n\n";  // Method for accessing members/methods of objects made on heap.
+	cout << accountPtr->getBalance() << "\t<-- Balance of accountptr\n\n";  // Better implementation of above line.
+
+	// Chained Calls using pointers:
+	accountPtr->setAccountHolderName("Faizan")->setBalance(2000.10)->setAccountNumber(1);  // Only possible if method returns "this".
+	// Chained Calls using addresses:
+	// accountPtr->setAccountHolderName("Faizan").setBalance(2000.10).setAccountNumber(1);  // Only possible if method returns "*this".
+
+	// When using sizeof(object), we can expect to see the sum of memory of all variables in that object.
+	// However, if there is string variable, it wont return proper size, as string is a const char*, so it will always have fixed size regardless
+	// of string size, which does not denote the size of the string itself.
 
 
-
-	// Resume from 21:32:00
 	return 0;
 }
