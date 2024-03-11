@@ -48,17 +48,17 @@ public:
 	// Three types of Constructors, default, parameterised, copy.
 	
 	// Default Constructor, called when no parameters given: 
-	BankAccount() {
+	/*BankAccount() {
 		accountNumber = -1;
 		accountHolderName = "temp";
 		*balance = 0.0f;
-	}
+	}*/
 
 	// if we dont have a parameterised constructor, then default is not needed, but if we have, then
 	// either we make a default constructor, or include default arguments to eliminate the need for it.
 	
 	// Parameterised Constructor, called when parameters given:
-	BankAccount(int a = 0, string b = "", float c = 0.0f) { 
+	BankAccount(int a = -1, string b = "temp", float c = 0.0f) { 
 		accountNumber = a;
 		accountHolderName = b;
 		*balance = c;
@@ -123,6 +123,7 @@ public:
 int main()
 {
 	// Write implementation of above classes nd structs here.
+	BankAccount account1;  // Object account1 of class BankAccount created with default constructor.
 
 
 
