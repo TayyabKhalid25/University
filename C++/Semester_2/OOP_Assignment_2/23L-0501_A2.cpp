@@ -399,13 +399,8 @@ char* ReverseSentence(char* sentence)
 int CompareString(char* cstring1, char* cstring2)
 {
 	int length1 = stringLength(cstring1), length2 = stringLength(cstring2), lowerLength;
-	// Lower length needed to prevent out of bounds access.
-	if (length1 < length2)
-		lowerLength = length1;
-	else
-		lowerLength = length2;
 
-	for (int i = 0; i < lowerLength; i++)
+	for (int i = 0; i < length1 && i < length2; i++)
 	{
 		if (to_Lower(cstring1[i]) > to_Lower(cstring2[i]))  // cstring1 > cstring2, hence return 1.
 			return 1;
