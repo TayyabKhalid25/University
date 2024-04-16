@@ -311,7 +311,7 @@ public:
 		while (cstr[cstrlen] != '\0')  // find length of str.
 			cstrlen++;
 
-		lastResult = 0;
+		lastResult = 0;  // Number of Results found.
 		EvalReport** result = 0;
 
 		for (int i = 0; i < studentTotal; i++)
