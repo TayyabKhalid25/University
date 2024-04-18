@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="L230501_BCS2E1_LAB-7.cpp">
+    <ClCompile Include="L230501_BCS2E1_LAB-7(Late &amp; complete with main).cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
