@@ -311,7 +311,7 @@ public:
 		while (cstr[cstrlen] != '\0')  // find length of str.
 			cstrlen++;
 
-		lastResult = 0;
+		lastResult = 0;  // Index of number of results found.
 		EvalReport** result = 0;
 
 		for (int i = 0; i < studentTotal; i++)
@@ -452,4 +452,3 @@ int main()
 	EvalReport::deleteData(students, result);
 	return 0;
 }
-
