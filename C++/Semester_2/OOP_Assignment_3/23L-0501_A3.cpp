@@ -32,7 +32,7 @@ public:
     }
 
     // Copy Constructor
-    PString(PString& rhs) {
+    PString(const PString& rhs) {
         this->len = rhs.len;
         this->str = new char[this->len + 1];
         for (int i = 0; i < this->len; i++)  // string deep copy
@@ -77,6 +77,11 @@ public:
 	}
 
 	// Concatenation Operators
+	friend PString operator+(const char* lhs, const PString& rhs) {
+		PString newStr(lhs);
+		return newStr + rhs;
+	}
+
 	PString operator+(const PString& rhs) const {
 		char* temp = new char[this->len + rhs.len + 1];  // +1 for '\0'
 		for (int i = 0; i < this->len; i++)
