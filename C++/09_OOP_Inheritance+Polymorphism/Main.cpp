@@ -1,8 +1,19 @@
 #include <iostream>
 using namespace std;
 // Continue from 22:59:20
+class BankAccount;  // Forward Declaration
 
-// Sample Class below for Syntax.
+// Three types of inheritance, public, protected, private. Through this we can control how relaxed or constrained is the access of base class members
+// from derived class. Private members will never be accessible from derived class.
+// Final keyword makes it so that the class will not be inherited further.
+
+class SavingAccount final : public BankAccount {  
+
+};
+
+
+
+// Sample Class below for Syntax and Inheritance.
 class BankAccount 
 {  
 private:
