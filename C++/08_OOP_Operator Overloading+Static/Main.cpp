@@ -85,6 +85,7 @@ public:
         else throw out_of_range("Index out of range");
     }
 
+    // Friend keyword allows access to other class's functions.
     // The following two operators can also be made a global function without friend keyword to achieve the same funtion.
     // Overload the << operator for output
     friend ostream& operator<<(ostream& out, const Complex& c) {

@@ -140,7 +140,7 @@ public:
 
 int main()
 {
-	// Write implementation of above classes nd structs here.
+	// Implementation of above classes:
 	group1.num1 = 20;  // The global variable created in beginning of struct is available here.
 	student student1;  // An object/instance created of the struct student.
 	student student2{ 10, "Tayyab", "Somewhere"};  // The object is also initialised with values for the variables/members within.
